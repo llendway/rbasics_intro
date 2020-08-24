@@ -1,0 +1,331 @@
+---
+title: "R Basics"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+    code_download: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r libraries, include=FALSE}
+library(tidyverse)         # for graphing and data cleaning
+library(googlesheets4)     # for reading in data from googlesheets
+library(lubridate)         # for working with dates
+theme_set(theme_minimal()) # my favorite ggplot theme
+gs4_deauth()               #To not have to authorize each time
+```
+
+```{r data, include=FALSE}
+data(mpg) # this dataset is part of an R package
+# this dataset is from a googlesheet
+garden_harvest <- read_sheet("https://docs.google.com/spreadsheets/d/1DekSazCzKqPS2jnGhKue7tLxRU3GVL1oxi-4bEM5IWw/edit?usp=sharing") %>% 
+  mutate(date = ymd(date))
+```
+
+
+# Installation
+
+Make sure you have the newest versions of R and R Studio. R should be 4.0.2 "Taking Off Again" (in case you are wondering, the interesting version names come from [Peanut cartoons](https://livefreeordichotomize.com/2018/04/23/r-release-names/)) and R Studio should be 1.3.1056.
+
+  * Go to [CRAN](https://cran.r-project.org/) (Comprehensive R Archive Network) to install R. Choose the appropriate download (likely either Mac or PC). If you have a Mac, you should then choose the latest release that ends in `.pkg`.  If you have a PC, you should click on `base`. Once it downloads, you will need to click on the file that was downloaded in order to install it. You can click through the prompts during installation. Once finished, it should tell you that it was installed successfully. (If you have a Mac, you should also download and install XQuartz [here](https://www.xquartz.org/).)
+  * Download R Studio from [their website](https://www.rstudio.com/products/rstudio/download/#download). You want the free R Studio Desktop version. Choose the one that matches your operating system (one will likely be suggested to you at the top of the page). Follow the prompts. On a Mac, be sure to drop R Studio into the applications folder at the end of the download. If you have downloaded it before, it will ask if you want to use the newer version. Choose yes.
+  * To check your version of R, open R Studio and look in the console (bottom left box by default). At the top, it will say the version of R you are running. Make sure it is the version you expect. You can also type `R.Version()` into the console to find the version. To check your version of R Studio, click on the R Studio menu at the top of your R Studio session and choose About R Studio. Make sure you see the correct version. You can also type `RStudio.Version()` into the console to find the version. See the video below for a demonstration of how to do this.
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Wvq5-UuxkQY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[Voicethread: Check R and R Studio version](https://voicethread.com/myvoice/thread/15002577/93878698)
+
+  * If you have issues downloading or updating either of these, please contact me as early as possible.
+
+# Setting up for success
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0vmY6aDWmgU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[Voicethread: Setting up for Success](https://voicethread.com/share/15009982/)
+
+These are some steps you should take to set yourself up for an easier time using R and R Studio. 
+
+  * Create a folder on your desktop, in your Documents folder, or some other reasonable location on your computer. This should NOT be in your downloads. Let me say that again, more loudly, **THIS SHOULD NOT BE IN YOUR DOWNLOADS**. Give the folder a good name, like COMP_STAT_112, STAT155, or 2020SPRING_STAT253 (I use this document for all these courses but the name should match the course you are taking). 
+  * Save your documents to the course folder (or a folder within that) you created, **NOT** to your downloads! And save often! This is not like Google docs. It will not, in general, auto save for you.
+  * When you download resources from moodle, save them to the course folder you created. On most computers, downloaded files will be saved to your downloads. You can either change the settings or be sure to save files somewhere else after downloading. If you use a Mac, do not use Safari when downloading R markdown files from moodle. Use some other browser (Chrome, Mozilla, etc.). Safari will add a .txt extension to the .rmd file and makes it difficult for you to fix it.
+  * Change global settings! Go to Tools --> Global options. On the General tab, next to *Save workspace to .RData on exit*, choose *Never* and uncheck the box next to *Restore .Rdata into workspace at startup*. You can also go to the Appearance tab to customize the look of R Studio. 
+  * Spell check. There is a spell check button (ABC with a check mark underneath it). You should use that for your all assignments. In this newest version of R Studio there is also inline spellcheck so words it does not recognize will have a squiggly line under them.  
+  * Don't be afraid to use the internet to search for answers to your questions. I do this all the time. And when I say all the time, I mean every single time I use R. I will try to show you examples of doing this in class.
+
+# Tour of R Studio
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FKl4V1lGkmU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[Voicethread: R Studio tour](https://voicethread.com/share/15010805/)
+
+There are four main panes in R Studio. I will discuss all four. If you ever want to change the layout, you can do that by clicking the down arrow in the menu at the top of R Studio that looks like a window with four panes. And, if you ever lose one or more of the panes, click that same down arrow and choose *Show All Panes*. 
+
+## Source
+
+The *main* pane in the top left has the file you are working from. In this class, we will work with R Markdown files, .rmd files for short. I talk about those more below. 
+
+## Console
+
+The *console* in the lower left is where the code is evaluated. Since we can also see the code evaluated within the .rmd file, I often keep the console minimized. I will sometimes do some quick math in the console. The `>` is  the prompt, indicating where you should start your code. 
+
+When you knit (compile) your document, this pane will show the complication process in a tab called *R Markdown*. If you get an error, you will see it there.
+
+## Environment, History, Connections, Tutorial, (Git - later)
+
+The pane in the upper right has a few tabs of interest. The *Environment* tab shows anything that has been saved to the workspace. So, if you read in a dataset or create a new named dataset, variable, etc., it will show up there. You can do some basic exploration of those items by clicking on them in the Environment.
+
+The *History* tab shows your history of code that has been run in this session. It is sometimes helpful if you want to get to an old piece of code that you deleted from your .rmd file. 
+
+The *Tutorials* tab is new. I would encourage you to explore the resources available there. 
+
+Later in the course, we will be learning about Git and GitHub. Once we start using those tools, there will be a *Git* tab i this pane.
+
+## Files, Plots, Packages, Help, Viewer
+
+I think the most important two tabs in the lower right are *Files* and *Help*. In the *Files* tab, you can navigate to various locations on your computer. By default, it will be in the folder where the file you have open is located. 
+
+The *Help* tab is where you can go to search for help with R functions. You can type in a function name and go to that function's help page. 
+
+# R Markdown
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MBfaGUgEPbs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[Voicethread: R Markdown Intro](https://voicethread.com/myvoice/thread/15008532/93928308)
+
+This document was created from an [R Markdown](http://rmarkdown.rstudio.com) file that was compiled to an html document. After you have installed R and R Studio, you can download the R Markdown file from the moodle page and open it to see the "code" behind this document. We will use them to interweave text with R code and R output (tables/graphs/etc.) to create a beautiful HTML document. (Word docs and PDFs can also be created but we usually like the look and layout of HTML files the best so that's our focus).
+
+In the future, when you want to create your own document, I would recommend starting with the *R_Markdown_Template.Rmd* I posted on the moodle page. Otherwise, go to File --> New file and choose R Markdown. Follow the prompts and you are ready to begin!
+
+Writing in an R Markdown document is a little different from writing in Word or other WYSIWYG (What You See Is What You Get) word processor. In R Markdown you have to explicitly tell it to do things like bold or italics. Then when you knit (compile) the document, you see those in the final product. The best way to learn these features is to try some things on your own. I recommend having the [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) open to help. This can also be found on the Help toolbar at the top under Cheatsheets --> R Markdown Reference Guide. 
+
+Like I mentioned above, you will knit your R Markdown file (.rmd file) which seemingly magically turns it into a beautiful html file. The html files are what you will submit for assignments on moodle. To knit an R Markdown file, either click on the icon above that looks like a ball of yarn with knitting needles in it, or click the arrow next to that and choose knit to html. When you knit the document, an html file with the same name as the .rmd file (but with an html extension) is saved to wherever the .rmd file was saved. This is why it is extremely important that you know where you saved your file initially!
+
+**DISCLAIMER**: I have been using R since 2003. The first time I used it was in a statistics course right here at Macalester College. I was afraid of coding and completely overwhelmed at first. I thought I would never get the hang of it. I asked a lot of questions, often feeling like they were really silly questions. But, that helped me learn and conquer my fear. Since I have been using R for so long now, it is sometimes hard for me to remember what questions I had when I first started. So, please ask questions! It is very likely that if you have a question, someone else has the same one.
+
+## Good resources
+
+These are great resources. I almost always have the cheatsheet open when using R because I know I'll need to use something from it. I find the Pandoc's Markdown section of the R Markdown Cheatsheet especially helpful to do some basic, but cool things. 
+
+* [R Markdown Cheatsheet](https://rstudio.com/resources/cheatsheets/)  
+* [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/basics.html)  
+* [R for Data Science](https://r4ds.had.co.nz/r-markdown.html)  
+
+
+## Code chunks
+
+An R code chunk is located below, with some simple math in it. You should use the shortcuts to insert a code chunk. You can do this by going to Insert --> R  or by pressing *Cmd+Option+I* (*Ctrl+Alt+I* on a PC). 
+
+You can execute the code chunk "in line" by clicking the *Run* button (the green arrow) within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter* (*Ctrl+Shift+Enter* on a PC). 
+
+You can also highlight a portion of the code and choose Run selected line(s) using the down arrow icon next to the Run button, near the top right corner of this file or the shortcut of *Shift+Enter*. The output is displayed beneath the code chunk within this markdown document. When the document is knit, it will be displayed in a slightly nicer fashion.
+
+This is some really simple R code. In the output, the [1] you see means that is the first observation. So notice below, there are two [1]'s because we have two lines of code, thus two outputs.
+
+```{r}
+2 + 5
+3 - 4
+```
+
+Here is an example of more advanced R code that creates a summary of my garden data. The output is a table.
+
+```{r}
+garden_harvest %>% 
+  group_by(vegetable) %>% 
+  summarize(weight = sum(weight),
+            wt_lbs = weight*0.00220462) %>% 
+  arrange(desc(wt_lbs))
+```
+
+And this is an example of code where the output is a plot.
+
+```{r}
+garden_harvest %>% 
+  group_by(date) %>% 
+  summarize(weight = sum(weight),
+            wt_lbs = weight*0.00220462) %>% 
+  ggplot(aes(x = date, y = wt_lbs)) +
+  geom_point() +
+  geom_line() +
+  labs(title = "Daily harvest from the #junglegarden (lb)",
+       y = "", x = "") +
+  scale_y_continuous(breaks = seq(0,100,1))
+```
+
+Knit the R markdown file by choosing that option on the down arrow next to the Knit button. We will always Knit to HTML in this class. 
+
+## Naming
+
+We will often want to name something that we will use again later. We can do this in R using the `<-` notation.  So, in the code below, I store `2 + 5` as `seven`. Notice it shows up in the Environment after doing this. Then I can use `seven` in later steps. You can store more complicated things as well. Also see the top of the file where I read in a dataset and name it `garden_harvest`.
+
+```{r}
+seven <- 2 + 5
+seven
+
+seven + 5
+```
+
+## Annotating code 
+
+We usually discuss our code and output outside of the code chunk itself, but sometimes you might want to write a note to yourself about the code and it is nice to do that inside of the code.  The pound (or hashtag, as most of you probably know it) can be used to do that. Notice R ignores everything after the pound on that line, but runs the next line without a problem. You can see another example where I use this type of annotation in the loading library code chunk at the top. 
+
+```{r}
+2 + 5 #wow
+3 - 4
+```
+
+
+## Options
+
+Within each R code chunk, we can control different options. For example, I added `echo=FALSE` to the chunk below which means the code will not be in the html file. Let's knit it and take a look.
+
+```{r, echo=FALSE}
+garden_harvest %>% 
+  group_by(date) %>% 
+  summarize(weight = sum(weight),
+            wt_lbs = weight*0.00220462) %>% 
+  ggplot(aes(x = date, y = wt_lbs)) +
+  geom_point() +
+  geom_line() +
+  labs(title = "Daily harvest from the #junglegarden (lb)",
+       y = "", x = "") +
+  scale_y_continuous(breaks = seq(0,100,1))
+```
+
+Sometimes, we want to control options throughout the whole document. If we go back to the first R code chunk, it contains `knitr::opts_chunk$set(echo = TRUE)`. This means that the `echo=TRUE` (which means the code is displayed in the output along with the output) will be the default in all code chunks unless the chunk is overwritten. I also added `warning=FALSE` and `message=FALSE` to this document when I was finished. This omits all messages and warnings from the knitted file. Wait to do this until the end so that you don't miss any important messages and warnings.
+
+## Datasets
+
+Some of the datasets we’ll be using are contained in R packages. So, they are ready for us to access and use. For example, the `mpg` data is from the `tidyverse` package. To find out details about the dataset, type `mpg` in the help menu or `?mpg` in the console.
+
+In order get the dataset to show up in the Global Environment, you need to "load" the data. It will initially say `<Promise>` next to it, but that will change as soon as you actually use the dataset. Once you do, you can then go click on the dataset and a spreadsheet view of the data will open. We loaded this previously (see above). 
+
+External data can be loaded in various ways depending its format and where it is. Data stored in Googlesheets are easy to load with the `googlesheets4` package. See an example of that in the dataset code chunk above.
+
+In addition to looking at the data in the spreadsheet viewer, you might find the following couple functions useful to explore some basic properties of the dataset.
+
+The `dim()` function tells us the dimensions of the dataset, the number of observations (also called cases or rows) and the number of variables (also called columns).
+
+```{r}
+dim(mpg)
+```
+
+We may want to look at the first few rows of the dataset to make sure everything is as we expect.
+
+```{r}
+head(mpg)
+```
+
+The `glimpse()` functions shows a brief summary of the data.
+
+```{r}
+glimpse(mpg)
+```
+
+The `summary()` function also gives a summary of the data.
+
+```{r}
+summary(mpg)
+```
+
+## Packages/Libraries
+
+You can run R as is without any additional features but many of the tasks we will want to do will require or be enhanced by extra packages/libraries (I use these words interchangeably). Download and install packages by going to the Packages tab (top of lower right box) and choosing Install. You can then list the packages you would like to install (alternatively, you can use `install.packages()` function in the console). Once installed, you need to run a `library()` statement with that package name to make the functions within them available for use. I like this analogy from the [Modern Dive](https://moderndive.com/1-getting-started.html#packages) authors: libraries are to R as apps are to smart phones. How many of you use a smart phone without additional apps?
+
+You should put an R code chunk that loads all the libraries you will use throughout the assignment at the top of your file. I have done that in this document.
+
+There are over 11,000 packages on CRAN (and even more available other places like git, etc.). I WILL NOT cover them all!
+
+## Modifying the YAML
+
+In the R Markdown file, the portion at the top within the two sets of three dashes, is called the YAML section. It is a place where you can control document settings. I'll show you a few things you can do.
+
+### Themes
+
+R Markdown supports numerous themes. Check them out [here](https://bookdown.org/yihui/rmarkdown/html-document.html#appearance-and-style). You could modify the YAML to include a different theme, like I do below.
+
+```
+---
+title: "My title"
+author: "Lisa Lendway"
+date: "8/10/2020"
+output: 
+  html_document:
+    theme: journal
+---
+```
+### Table of Contents
+
+We can add a table of contents so that each heading (and subheading) can be clicked. We often label homework exercises using headings so this can be a nice way for you to quickly navigate to a specific exercise.
+
+```
+---
+title: "My title"
+author: "Lisa Lendway"
+date: "8/10/2020"
+output: 
+  html_document:
+    theme: journal
+    toc: true
+---
+```
+
+### Nicer tables
+
+Tables don't look great by default in the R output. There are many ways we can make them look better, but one quick way is to making them html tables by adding `df_print: paged` to the YAML heading.
+
+```
+---
+title: "My title"
+author: "Lisa Lendway"
+date: "8/10/2020"
+output: 
+  html_document:
+    theme: journal
+    toc: true
+    df_print: paged
+---
+```
+
+### Add a code download button
+
+This can be helpful for sharing code so someone can access your .rmd file through the html file.
+
+```
+---
+title: "My title"
+author: "Lisa Lendway"
+date: "8/10/2020"
+output: 
+  html_document:
+    theme: journal
+    toc: true
+    df_print: paged
+    code_download: true
+---
+```
+
+### YAML is VERY picky
+
+Indentation and spacing need to be EXACT! Let's see what happens if (when?) we make a mistake.
+
+
+## R Markdown tips
+
+1. Make sure you don't have any spaces or weird characters in your file name. It is best to use letters, numbers, underscores, and dashes in your names. And, give it a name that helps you remember what it is.
+2. Save your file to the course folder you created or a folder within that, NOT to your downloads.  
+3. If I do not give you a file to start from, use the R markdown template I provided.  
+4. I highly recommend knitting your document often. That way if there are errors early on, you can catch them. If there are errors in your document, they will be indicated with the line number where the error started in the R Markdown section (lower left corner next to the Console).  
+5. Use the internet to help you search for solutions! Stack overflow is a great place to start. When searching for R related topics, add R to your search. If it is related to R Markdown, add R Markdown. We will do some of this searching together in class, too.
+
+## Code style
+
+Although R is not terribly picky about how code is written, we are! We want to write readable code. I try to follow the [tidyverse styleguide](http://style.tidyverse.org/index.html) and you should as well. For example, in all the `ggplot` code, a new line is started after a `+`. Later we will see that we start a new line of code after a pipe, `%>%`. Code that is difficult to read may be deducted points on homework assignments.
+
+
+
