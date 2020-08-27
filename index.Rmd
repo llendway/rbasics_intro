@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 library(tidyverse)         # for graphing and data cleaning
 library(googlesheets4)     # for reading in data from googlesheets
 library(lubridate)         # for working with dates
+library(downloadthis)      # for adding downloadable files to document
 theme_set(theme_minimal()) # my favorite ggplot theme
 gs4_deauth()               #To not have to authorize each time
 ```
@@ -319,9 +320,20 @@ Indentation and spacing need to be EXACT! Let's see what happens if (when?) we m
 
 1. Make sure you don't have any spaces or weird characters in your file name. It is best to use letters, numbers, underscores, and dashes in your names. And, give it a name that helps you remember what it is.
 2. Save your file to the course folder you created or a folder within that, NOT to your downloads.  
-3. If I do not give you a file to start from, use the R markdown template I provided.  
+3. If I do not give you a file to start from, use the R markdown template I provided on the moodle page and that you can download below.  
 4. I highly recommend knitting your document often. That way if there are errors early on, you can catch them. If there are errors in your document, they will be indicated with the line number where the error started in the R Markdown section (lower left corner next to the Console).  
 5. Use the internet to help you search for solutions! Stack overflow is a great place to start. When searching for R related topics, add R to your search. If it is related to R Markdown, add R Markdown. We will do some of this searching together in class, too.
+
+```{r, echo=FALSE}
+download_file(
+  path = "../R_Markdown_Template.Rmd",
+  button_label = "Download R_Markdown_Template",
+  button_type = "info",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
 
 ## Code style
 
