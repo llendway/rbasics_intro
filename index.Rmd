@@ -31,7 +31,7 @@ garden_harvest <- read_sheet("https://docs.google.com/spreadsheets/d/1DekSazCzKq
 
 # Installation
 
-Make sure you have the newest versions of R and R Studio. R should be 4.0.2 "Taking Off Again" (in case you are wondering, the interesting version names come from [Peanut cartoons](https://livefreeordichotomize.com/2018/04/23/r-release-names/)) and R Studio should be 1.3.1056.
+Make sure you have the newest versions of R and R Studio. R should be 4.0.2 "Taking Off Again" or higher (in case you are wondering, the interesting version names come from [Peanut cartoons](https://livefreeordichotomize.com/2018/04/23/r-release-names/)) and R Studio should be 1.3.1056 or higher.
 
   * Go to [CRAN](https://cran.r-project.org/) (Comprehensive R Archive Network) to install R. Choose the appropriate download (likely either Mac or PC). If you have a Mac, you should then choose the latest release that ends in `.pkg`.  If you have a PC, you should click on `base`. Once it downloads, you will need to click on the file that was downloaded in order to install it. You can click through the prompts during installation. Once finished, it should tell you that it was installed successfully. (If you have a Mac, you should also download and install XQuartz [here](https://www.xquartz.org/).)
   * Download R Studio from [their website](https://www.rstudio.com/products/rstudio/download/#download). You want the free R Studio Desktop version. Choose the one that matches your operating system (one will likely be suggested to you at the top of the page). Follow the prompts. On a Mac, be sure to drop R Studio into the applications folder at the end of the download. If you have downloaded it before, it will ask if you want to use the newer version. Choose yes.
@@ -147,6 +147,7 @@ And this is an example of code where the output is a plot.
 
 ```{r}
 garden_harvest %>% 
+  filter(date < ymd("2020-09-01")) %>% 
   group_by(date) %>% 
   summarize(weight = sum(weight),
             wt_lbs = weight*0.00220462) %>% 
@@ -187,6 +188,7 @@ Within each R code chunk, we can control different options. For example, I added
 
 ```{r, echo=FALSE}
 garden_harvest %>% 
+  filter(date < ymd("2020-09-01")) %>% 
   group_by(date) %>% 
   summarize(weight = sum(weight),
             wt_lbs = weight*0.00220462) %>% 
