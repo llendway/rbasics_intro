@@ -14,18 +14,23 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 
 ```{r libraries, include=FALSE}
 library(tidyverse)         # for graphing and data cleaning
-library(googlesheets4)     # for reading in data from googlesheets
 library(lubridate)         # for working with dates
 library(downloadthis)      # for adding downloadable files to document
+library(devtools)          # for downloading packages from GitHub, including gardenR
+#devtools::install_github("llendway/gardenR") # run if package is not already installed
+library(gardenR)
 theme_set(theme_minimal()) # my favorite ggplot theme
-gs4_deauth()               #To not have to authorize each time
+# old way of reading in garden data
+# library(googlesheets4)     # for reading in data from googlesheets
+# gs4_deauth()               #To not have to authorize each time
 ```
 
 ```{r data, include=FALSE}
 data(mpg) # this dataset is part of an R package
-# this dataset is from a googlesheet
-garden_harvest <- read_sheet("https://docs.google.com/spreadsheets/d/1DekSazCzKqPS2jnGhKue7tLxRU3GVL1oxi-4bEM5IWw/edit?usp=sharing") %>% 
-  mutate(date = ymd(date))
+data(garden_harvest) # part of the gardenR R package
+# this dataset is from a googlesheet - old way of reading in garden data
+# garden_harvest <- read_sheet("https://docs.google.com/spreadsheets/d/1DekSazCzKqPS2jnGhKue7tLxRU3GVL1oxi-4bEM5IWw/edit?usp=sharing") %>% 
+#   mutate(date = ymd(date))
 ```
 
 
@@ -208,7 +213,7 @@ Some of the datasets we’ll be using are contained in R packages. So, they are 
 
 In order get the dataset to show up in the Global Environment, you need to "load" the data. It will initially say `<Promise>` next to it, but that will change as soon as you actually use the dataset. Once you do, you can then go click on the dataset and a spreadsheet view of the data will open. We loaded this previously (see above). 
 
-External data can be loaded in various ways depending its format and where it is. Data stored in Googlesheets are easy to load with the `googlesheets4` package. See an example of that in the dataset code chunk above.
+External data can be loaded in various ways depending its format and where it is. Data stored in Googlesheets are easy to load with the `googlesheets4` package. See an example of that in the dataset code chunk above (although I have now added that data to the `gardenR` package).
 
 In addition to looking at the data in the spreadsheet viewer, you might find the following couple functions useful to explore some basic properties of the dataset.
 
