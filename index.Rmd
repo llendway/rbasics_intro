@@ -8,6 +8,8 @@ output:
     code_download: true
 ---
 
+<script async defer data-domain="r-basics.netlify.app" src="https://plausible.io/js/plausible.js"></script>
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 ```
