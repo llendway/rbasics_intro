@@ -331,7 +331,7 @@ Indentation and spacing need to be EXACT! Let's see what happens if (when?) we m
 
 ## R Markdown tips
 
-1. Make sure you don't have any spaces or weird characters in your file name. It is best to use letters, numbers, underscores, and dashes in your names. And, give it a name that helps you remember what it is.
+1. Make sure you don't have any spaces or weird characters in your file name. It is best to use letters, numbers, underscores, and dashes in your names. And, give it a name that helps you remember what it is. Take ~5 minutes to read through at least the first 4 sections of these [slides](https://slides.djnavarro.net/project-structure) by Danielle Navarro to help you learn best practices.  
 2. Save your file to the course folder you created or a folder within that, NOT to your downloads.  
 3. If I do not give you a file to start from, use the R markdown template I provided on the moodle page and that you can download below.  
 4. I highly recommend knitting your document often. That way if there are errors early on, you can catch them. If there are errors in your document, they will be indicated with the line number where the error started in the R Markdown section (lower left corner next to the Console).  
