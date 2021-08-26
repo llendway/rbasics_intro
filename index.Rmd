@@ -49,7 +49,8 @@ Make sure you have the newest versions of R and RStudio. R should be 4.1.0 "Camp
 
 [Voicethread: Check R and RStudio version](https://voicethread.com/myvoice/thread/15002577/93878698)
 
-  * If you have issues downloading or updating either of these, please contact me as early as possible.
+  * If you have issues downloading or updating either of these, please contact me as early as possible.  
+  * If you plan to use Macalester's RStudio server, please see this [video](https://voicethread.com/share/15199014/) for a few things that will be different.
 
 # Setting up for success
 
