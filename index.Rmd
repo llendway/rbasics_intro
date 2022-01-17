@@ -38,9 +38,9 @@ data(garden_harvest) # part of the gardenR R package
 
 # Installation
 
-Make sure you have the newest versions of R and RStudio. R should be 4.1.0 "Camp Pontanezen" or higher (in case you are wondering, the interesting version names come from [Peanut cartoons](https://livefreeordichotomize.com/2018/04/23/r-release-names/)) and RStudio should be 1.4.1717 or higher.
+Make sure you have the newest versions of R and RStudio. R should be 4.1.0 "Camp Pontanezen" or higher. If you are just installing it now, the version will be 4.1.2 "Bird Hippie" (in case you are wondering, the interesting version names come from [Peanut cartoons](https://livefreeordichotomize.com/2018/04/23/r-release-names/)). RStudio should be 1.4.1717 or higher. The newest version is 2021.09.2-382.
 
-  * Go to [CRAN](https://cran.r-project.org/) (Comprehensive R Archive Network) to install R. Choose the appropriate download (likely either Mac or PC). If you have a Mac, you should then choose the latest release that ends in `.pkg`.  If you have a PC, you should click on `base`. Once it downloads, you will need to click on the file that was downloaded in order to install it. You can click through the prompts during installation. Once finished, it should tell you that it was installed successfully. (If you have a Mac, you should also download and install XQuartz [here](https://www.xquartz.org/).)
+  * Go to [CRAN](https://cran.r-project.org/) (Comprehensive R Archive Network) to install R. Choose the appropriate download (likely either Mac or PC). You want to download the precompiled binary distributions, not the source code. If you have a Mac, you should then choose the latest release that ends in .pkg and you can determine if you have an Intel-based processor by going to the Apple menu (top left of your screen) > About This Mac and seeing if the processor listed has the word Intel in it (e.g. Processor 2.3 GHz Dual-Core Intel Core i5). If you have a PC, you should click on `base`. Once it downloads, you will need to click on the file that was downloaded in order to install it. You can click through the prompts during installation. Once finished, it should tell you that it was installed successfully. (If you have a Mac, you should also download and install XQuartz [here](https://www.xquartz.org/).)
   * Download RStudio from [their website](https://www.rstudio.com/products/rstudio/download/#download). You want the free RStudio Desktop version. Choose the one that matches your operating system (one will likely be suggested to you at the top of the page). Follow the prompts. On a Mac, be sure to drop RStudio into the applications folder at the end of the download. If you have downloaded it before, it will ask if you want to use the newer version. Choose yes.
   * To check your version of R, open RStudio and look in the console (bottom left box by default). At the top, it will say the version of R you are running. Make sure it is the version you expect. You can also type `R.Version()` into the console to find the version. To check your version of RStudio, click on the RStudio menu at the top of your RStudio session and choose About RStudio. Make sure you see the correct version. You can also type `RStudio.Version()` into the console to find the version. See the video below for a demonstration of how to do this (note that the video is from the summer of 2020 so will NOT have the most up-to-date versions).
 
@@ -49,7 +49,7 @@ Make sure you have the newest versions of R and RStudio. R should be 4.1.0 "Camp
 
 [Voicethread: Check R and RStudio version](https://voicethread.com/myvoice/thread/15002577/93878698)
 
-  * If you have issues downloading or updating either of these, please contact me as early as possible.  
+  * If you have issues downloading or updating either of these, please contact your instructor as early as possible.  
   * If you plan to use Macalester's RStudio server, please see this [video](https://voicethread.com/share/15199014/) for a few things that will be different.
 
 # Setting up for success
@@ -336,11 +336,11 @@ Indentation and spacing need to be EXACT! Let's see what happens if (when?) we m
 2. Save your file to the course folder you created or a folder within that, NOT to your downloads.  
 
 <center>
-![Anakin says, "I knitted the .Rmd file to create the .html file." To which Padme replies, "And you know ehre it is because you saved it somewhere other your downloads folder, right?"](good-name-meme.jpg){width="50%"}
+![Anakin says, "I knitted the .Rmd file to create the .html file." To which Padme replies, "And you know where it is because you saved it somewhere other your downloads folder, right?"](good-name-meme.jpg){width="50%"}
 </center>
 
-3. If I do not give you a file to start from, use the R markdown template that you can download below.  
-4. I highly recommend knitting your document often. That way if there are errors early on, you can catch them. If there are errors in your document, they will be indicated with the line number where the error started in the R Markdown section (lower left corner next to the Console).  
+3. If you are not given a file to start from, use the R markdown template that you can download below.  
+4. Knit your document often! That way if there are errors early on, you can catch them. If there are errors in your document, they will be indicated with the line number where the error started in the R Markdown section (lower left corner next to the Console).  
 5. Use the internet to help you search for solutions! Stack overflow is a great place to start. When searching for R related topics, add R to your search. If it is related to R Markdown, add R Markdown. We will do some of this searching together in class, too.
 
 ```{r, echo=FALSE}
